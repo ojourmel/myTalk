@@ -1,0 +1,15 @@
+#!/bin/bash
+
+touch ~/.bash_aliases
+if(cat ~/.bash_aliases | grep myTalk >> /dev/null) then
+   echo "null" >> /dev/null;
+else
+   echo "alias myt=\"~/.myTalk/myt\"" >> ~/.bash_aliases
+fi
+
+touch ~/.bash_logout
+if(cat ~/.bash_logout | grep myt >> /dev/null) then
+   echo "null" >> /dev/null;
+else
+   echo "myt --kill" >> ~/.bash_logout
+fi

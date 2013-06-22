@@ -1,0 +1,54 @@
+MYTALK                    User Commands                               MYTALK
+
+NAME
+         myt - cli chat
+
+SYNOPSIS
+         myt [OPTION] <message> [<"message">]
+
+EXAMPLE
+         $myt hello there<CR>
+
+
+DESCRIPTION
+         This help file documents myt a text based, system wide chat program
+
+OPTIONS
+
+         --start
+              starts the listening services for myTalk in a new X window,
+               then exits
+
+        --start-nw
+              starts the listening services for myTalk in the background
+               of the current terminal, then exits
+       
+         --stat
+              displays the current status of the listening services for
+               myTalk, then exits
+
+         --kill
+              kills any running listening services that you own, then exits
+
+         --who
+              displays all users using the listening services. ie. who is
+               on-line, then exits
+              NOTE: this is not fully functioning, and is a KNOWN BUG.
+
+         --help
+              displays this help file, then exits
+
+         --version
+              displays the current working version and then exits
+
+AUTHORS
+	Written by Oliver Jourmel, Lochlin Duperron, Zac Pez
+
+MORE INFORMATION
+        Can be found on the release notes. ~/.myTalk/notes.txt
+
+NOTE
+
+                         Version ALPHA 0.2.4
+
+

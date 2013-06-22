@@ -1,0 +1,16 @@
+#!/usr/bin/perl
+
+$window = shift @ARGV;
+
+$username = `whoami`;
+chomp $username;
+$masterLog = "/home/student/jourmeob/.myTalk/masterLog.txt";
+$LOGFILE = "/home/student/" . $username . "/.myTalk/log.txt";
+
+if($window eq "nw"){
+   system("~/.myTalk/tailTalk '$LOGFILE' &");
+}else{
+   system("x-terminal-emulator -e ~/.myTalk/tailTalk '$LOGFILE' &");
+}
+
+system("tail -s 1 -f '$masterLog' >> '$LOGFILE' &");
