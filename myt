@@ -153,7 +153,7 @@ sub help
 
 sub version
 {
-   print "Version 0.2.4\n";
+   print "Version 0.2.5\n";
    print "Check ~/.myTalk/notes.txt for release notes\n";
 }
 
@@ -165,7 +165,7 @@ sub who
 
 sub printLast
 {
-   $lastLine = `tail -n 3 $LOGFILE`;
+   $lastLine = `tail -n 3 $masterLog`;
    print $lastLine;
 }
 

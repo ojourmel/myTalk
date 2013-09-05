@@ -27,11 +27,14 @@ OPTIONS
               displays the current status of the listening services for
                myTalk, then exits
 
+         -r
+            prints, to STDOUT the last three lines in the master log file
+
          --kill
               kills any running listening services that you own, then exits
 
          --who
-              displays all users using the listening services. ie. who is
+              displays all users using the listening services. ie. Who is
                on-line, then exits
               NOTE: this is not fully functioning, and is a KNOWN BUG.
 
@@ -49,6 +52,6 @@ MORE INFORMATION
 
 NOTE
 
-                         Version ALPHA 0.2.4
+                         Version BETA 0.2.5
 
 

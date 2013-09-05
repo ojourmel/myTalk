@@ -1,12 +1,12 @@
 v0.1
 	First alpha release, lot's of bugs... the most notable being chat text will print on your console no matter what application is running eg. man pages...
-	   myt does not start the listening servecies automaticaly...
-	   lots's of small typos, and no real documentaion within the perl scripts.
+	   myt does not start the listening services automatically...
+	   lots's of small typos, and no real documentation within the perl scripts.
 
 v0.1.1
-	Seccond alpha release, upgraded the myt and README to include -start, -stat and -kill.
+	Second alpha release, upgraded the myt and README to include -start, -stat and -kill.
 	   also update DOalias to fix the multiple install bug.
-           Note: the fix is a little bit ugly, I need to negate the if statment...
+           Note: the fix is a little bit ugly, I need to negate the if statement...
 	   still typos, and documentation bugs.
 
 v0.1.2 	Minor update to add -who, display all users on otter who are running tailTalk
@@ -21,9 +21,9 @@ v0.2.0  Major update: Change interface
 
            Other major changes... myt -start now spawns a dedicated chat window
               where all output is placed.
-              Also adds login and logout mesages in myt.
+              Also adds login and logout messages in myt.
               Adds the command myt --kill to your ~/.bash_logout when you quit.
-           STOPS support for ./starter  now the listening servecies MUST be started
+           STOPS support for ./starter  now the listening services MUST be started
               with myt --start
 
         KNOWN BUGS: --who will NOT work across systems, it will ONLY give
@@ -39,21 +39,23 @@ v0.2.0  Major update: Change interface
 v0.2.1 Major BUG FIXES  thanks to Lochlin
        Updates starter, DOalias, tailTalk.cpp
 
-       Fixes lag issues, as well as droping messages
+       Fixes lag issues, as well as dropping messages
        makes make update execute DOalias...
 
-v0.2.2 Added funcitonality, adds option --start-nw
+v0.2.2 Added functionality, adds option --start-nw
           for a no window myt. tailTalk will be run in background in the
           current terminal
-          Usefull for ssh sessions with X11 forwarding disabled.
+          Useful for ssh sessions with X11 forwarding disabled.
           Updates the makefile to close tailTalk nicely when updating
           Updates myt --kill to warn if tailTalk is not running
 
 
        Also documents a bug in --who, where the username is displayed twice
-       even if you are only running one isnstance of tailTalk.
+       even if you are only running one instance of tailTalk.
        Because of --who's current broken state, this is not a high priority.
 
-v0.2.3 Breaks all functionality, the will use distibution of v0.2.2 untill 0.2.4
+v0.2.3 Breaks all functionality, the will use distribution of v0.2.2 until 0.2.4
 
 v0.2.4 Added install-nc and update-nc for NoClobber in the makefile
+
+v0.2.5 Adds a -r to repeat the last 3 lines in the masterLog file
