@@ -2,33 +2,66 @@
 #include <fstream>
 #include <string.h>
 #include <sys/inotify.h>
+#include <unistd.h>
 #include <cstdlib>
 #include <list>
 #include <vector>
+#include <pthread.h>
+
+
+#define NUM_THREADS 2
+
+
+
+
+
+
+
 
 using namespace std;
 
+
+
 void getString(string fileName);
+void *listen(void* fileNamePointer);
+void *speak(void* TESTPOINTERPLEASEIGNORE);
+
 
 string lastMessage;
 vector<string> messageArray;
 
+
+
+
+
 int main( int argc, const char* argv[] )
 {
-   int watch = inotify_init();
-   const size_t buf_size = sizeof(struct inotify_event);
+
+   int listenerThreadError = 0;
+   int speakerThreadError = 0;
 
    string fileName = argv[1];
-
-   inotify_add_watch(watch, fileName.c_str(), IN_MODIFY);
-
-   char buf[buf_size]; 
-
-   while(read(watch, buf, buf_size)>= 0)
+   pthread_t threads[NUM_THREADS];
+   
+   listenerThreadError = pthread_create(&threads[0], NULL, listen, (void *)fileName.c_str() );
+   speakerThreadError = pthread_create(&threads[1], NULL, speak, NULL );
+ 
+   
+   
+   if (listenerThreadError)
    {
-      getString(fileName);
+      cout << "Error:unable to create thread 0" << endl;
+      exit(-1);
    }
-
+   
+   if (speakerThreadError)
+   {
+      cout << "Error:unable to create thread 1" << endl;
+      exit(-1);
+   }
+   
+   
+   pthread_exit(NULL);
 }
 
 void getString(string fileName)
@@ -78,6 +111,44 @@ void getString(string fileName)
          lastMessage = tmp;
       }
    }
+}
+
+void *listen(void* fileNamePointer)
+{
+   
+   string fileName = (char*)fileNamePointer;
+
+   int watch = inotify_init();
+   const size_t buf_size = sizeof(struct inotify_event);
+
+   
+
+   inotify_add_watch(watch, fileName.c_str(), IN_MODIFY);
+
+   char buf[buf_size]; 
+
+   while(read(watch, buf, buf_size)>= 0)
+   {
+      getString(fileName);
+   }
+
+   pthread_exit(NULL);
+}
+
+
+void *speak(void* TESTPOINTERPLEASEIGNORE)
+{
+
+   string message;
+
+   while(cin >> message)
+   {
+      message = "~/.myTalk/myt " + message;
+      system(message.c_str());
+   
+   }
+
+   pthread_exit(NULL);
 }
 
 
