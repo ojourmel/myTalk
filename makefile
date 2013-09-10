@@ -2,6 +2,9 @@ dud:
 	@echo "make install to install"
 	@echo "make update to update"
 
+compile:
+	g++ tailTalk.cpp -o tailTalk -std=c++11 -pthread
+
 install:
 	chmod 770 myt
 	chmod 770 tailTalk

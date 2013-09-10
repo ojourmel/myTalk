@@ -7,9 +7,20 @@ chomp $username;
 $masterLog = "/home/student/jourmeob/.myTalk/masterLog.txt";
 $LOGFILE = "/home/student/" . $username . "/.myTalk/log.txt";
 
-if($window eq "nw"){
+if($window eq "nw")
+{
    system("~/.myTalk/tailTalk '$LOGFILE' &");
-}else{
+}
+elsif($window eq "local")
+{
+   system("./tailTalk '$LOGFILE' &");
+}
+elsif($window eq "localw")
+{
+   system("x-terminal-emulator -e ./tailTalk '$LOGFILE' &");
+}
+else
+{
    system("x-terminal-emulator -e ~/.myTalk/tailTalk '$LOGFILE' &");
 }
 

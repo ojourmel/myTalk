@@ -91,12 +91,12 @@ if(@ARGV[0] eq "--help")
 sub killer
 {
    $tail = getTails();
-   if($tail eq ""){
-      print "tailTalk is not running\n";
-   }else{
+   system("killall tail 2>> /dev/null");
+   
+   if($tail ne "")
+   {
       system("~/.myTalk/myt \"quit: logging off\"");
-      system("kill `pgrep tailTalk` 2>> /dev/null");
-      system("kill `pgrep tail` 2>> /dev/null");
+      system("killall tailTalk 2>> /dev/null");
       print "tailTalk killed\n";
    }
 }
@@ -132,7 +132,7 @@ sub status
 
 sub getTails
 {
-   $pid = `ps aux | grep "/home/student/$username/.myTalk/tailTalk"`;
+   $pid = `ps aux | grep -e $username.*tailTalk`;
 
    @tmp = split ('\n',$pid);
    pop @tmp; # ignore the last two elements, it's the calls to grep

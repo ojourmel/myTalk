@@ -6,68 +6,35 @@
 #include <cstdlib>
 #include <list>
 #include <vector>
-#include <pthread.h>
-
-
-#define NUM_THREADS 2
-
-
-
-
-
-
-
+#include <thread>
 
 using namespace std;
 
-
-
 void getString(string fileName);
-void *listen(void* fileNamePointer);
-void *speak(void* TESTPOINTERPLEASEIGNORE);
-
+void listen(string FileNamePointer);
+void speak();
 
 string lastMessage;
 vector<string> messageArray;
 
-
-
-
-
 int main( int argc, const char* argv[] )
 {
-
-   int listenerThreadError = 0;
-   int speakerThreadError = 0;
 
    string fileName = argv[1];
    pthread_t threads[NUM_THREADS];
    
-   listenerThreadError = pthread_create(&threads[0], NULL, listen, (void *)fileName.c_str() );
-   speakerThreadError = pthread_create(&threads[1], NULL, speak, NULL );
+   thread listenerThread(listen, fileName);
+   thread speakerThread(speak);
  
+   listenerThread.join();
+   speakerThread.join();
    
-   
-   if (listenerThreadError)
-   {
-      cout << "Error:unable to create thread 0" << endl;
-      exit(-1);
-   }
-   
-   if (speakerThreadError)
-   {
-      cout << "Error:unable to create thread 1" << endl;
-      exit(-1);
-   }
-   
-   
-   pthread_exit(NULL);
 }
 
 void getString(string fileName)
 {
    ifstream Test;
-   Test.open(fileName.c_str(), std::ios_base::ate );//open file
+   Test.open(fileName.c_str(), std::ios_base::ate );//open file and set position to end of the file
    string tmp;
    int length = 0;
    int failsafe = 0;
@@ -107,21 +74,17 @@ void getString(string fileName)
       {
          tmp = messageArray.back();
          messageArray.pop_back();
-         cout << tmp << endl; // print it
+         printf("%s \n",tmp.c_str()); // print it
          lastMessage = tmp;
       }
    }
 }
 
-void *listen(void* fileNamePointer)
+void listen(string fileName)
 {
    
-   string fileName = (char*)fileNamePointer;
-
    int watch = inotify_init();
    const size_t buf_size = sizeof(struct inotify_event);
-
-   
 
    inotify_add_watch(watch, fileName.c_str(), IN_MODIFY);
 
@@ -131,24 +94,15 @@ void *listen(void* fileNamePointer)
    {
       getString(fileName);
    }
-
-   pthread_exit(NULL);
 }
 
-
-void *speak(void* TESTPOINTERPLEASEIGNORE)
+void speak()
 {
-
    string message;
 
-   while(cin >> message)
+   while(getline(cin , message))
    {
       message = "~/.myTalk/myt " + message;
       system(message.c_str());
-   
    }
-
-   pthread_exit(NULL);
 }
-
-
