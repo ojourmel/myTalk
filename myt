@@ -90,38 +90,45 @@ if(@ARGV[0] eq "--help")
 
 sub killer
 {
-   $tail = getTails();
+   # Overkill tail
    system("killall tail 2>> /dev/null");
-   
-   if($tail ne "")
-   {
-      system("~/.myTalk/myt \"quit: logging off\"");
-      system("killall tailTalk 2>> /dev/null");
-      print "tailTalk killed\n";
-   }
+   system("killall tailTalk 2>> /dev/null");
 }
 
 sub start
 {
    $cmd = shift;
 
-   if($cmd eq "w")
+   my $childID = fork();
+     
+   if($childID == 0) #Child
    {
-      system("~/.myTalk/starter w");
-   }
-   elsif($cmd eq "nw")
-   {
-      system("~/.myTalk/starter nw");
-   }
-   elsif($cmd eq "nwi")
-   {
-      system("~/.myTalk/starter nw true");
+   
+      sleep(2);
+      system("~/.myTalk/myt start: logging on");
+    print "\ntailTalk started\n\n";
+   
    }
 
+   else
+   {
+
+      if($cmd eq "w")
+      {
+         system("~/.myTalk/starter w");
+      }
+      elsif($cmd eq "nw")
+      {
+         system("~/.myTalk/starter nw");
+      }
+      elsif($cmd eq "nwi")
+      {
+         system("~/.myTalk/starter nw true");
+      }
+
+   }
 # clean up and be done
-   sleep(1);
-   system("~/.myTalk/myt start: logging on");
-   print "\ntailTalk started\n\n";
+
 }
 
 sub status

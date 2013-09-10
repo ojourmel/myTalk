@@ -137,9 +137,13 @@ void cleanup(int bs)
    // Only die once...
    if(!isclean)
    {
+   
+      // Clean tail, print logoff, cout die
+      system("~/.myTalk/myt quit: logging off");
+
+      system("killall tail 2> /dev/null");
+      cout << "tailTalk killed" << endl;
       isclean = 1;
-      system("~/.myTalk/myt --kill");
-      
    }
    
    exit(50);
