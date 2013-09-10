@@ -7,18 +7,25 @@
 #include <list>
 #include <vector>
 #include <thread>
+#include <signal.h>
 
 using namespace std;
 
 void getString(string fileName);
 void listen(string FileNamePointer);
 void speak();
+void cleanup(int bs);
 
 string lastMessage;
 vector<string> messageArray;
 
 int main( int argc, const char* argv[] )
 {
+   // Remember to "log off" if things die
+   signal(SIGTERM, cleanup);
+   signal(SIGHUP, cleanup);
+   signal(SIGINT, cleanup);
+   
    string fileName = argv[1];
    
    thread listenerThread(listen, fileName);
@@ -122,4 +129,19 @@ void speak()
          system(message.c_str());
       }
    }
+}
+
+void cleanup(int bs)
+{
+   static int isclean;
+   // Only die once...
+   if(!isclean)
+   {
+      isclean = 1;
+      system("~/.myTalk/myt --kill");
+      
+   }
+   
+   exit(50);
+
 }

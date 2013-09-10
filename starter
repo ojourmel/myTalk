@@ -1,27 +1,53 @@
 #!/usr/bin/perl
 
 $window = shift @ARGV;
+$interactive = shift @ARGV;
 
 $username = `whoami`;
 chomp $username;
 $masterLog = "/home/student/jourmeob/.myTalk/masterLog.txt";
+
 $LOGFILE = "/home/student/" . $username . "/.myTalk/log.txt";
+
+system("tail -s 1 -f '$masterLog' >> '$LOGFILE' &");
+
+
+
 
 if($window eq "nw")
 {
-   system("~/.myTalk/tailTalk '$LOGFILE' &");
+
+   if($interactive eq "true")
+   {
+      exec("~/.myTalk/tailTalk '$LOGFILE' ");
+   }
+   else
+   {
+      system("~/.myTalk/tailTalk '$LOGFILE' &");
+   }
+
 }
 elsif($window eq "local")
 {
-   system("./tailTalk '$LOGFILE' &");
+   exec("x-terminal-emulator -e ./tailTalk '$LOGFILE'");
 }
-elsif($window eq "localw")
+elsif($window eq "localnw")
 {
-   system("x-terminal-emulator -e ./tailTalk '$LOGFILE' &");
+
+   if($interactive eq "true")
+   {
+      exec("./tailTalk '$LOGFILE' ");
+   }
+   else
+   {
+      system("./tailTalk '$LOGFILE' &");
+   }
+
 }
 else
 {
-   system("x-terminal-emulator -e ~/.myTalk/tailTalk '$LOGFILE' &");
+   exec("x-terminal-emulator -e ~/.myTalk/tailTalk '$LOGFILE'");
 }
 
-system("tail -s 1 -f '$masterLog' >> '$LOGFILE' &");
+
+

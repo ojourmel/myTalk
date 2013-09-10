@@ -25,7 +25,14 @@ if(@ARGV[0] eq "--start")
 
 if(@ARGV[0] eq "--start-nw")
 {
-   start("nw");
+   if(@ARGV[1] eq "-i")
+   {
+      start("nwi");
+   }
+   else
+   {
+      start("nw");
+   }
    exit(0);
 }
 
@@ -100,9 +107,15 @@ sub start
 
    if($cmd eq "w")
    {
-      system("~/.myTalk/starter");
-   }elsif($cmd eq "nw"){
+      system("~/.myTalk/starter w");
+   }
+   elsif($cmd eq "nw")
+   {
       system("~/.myTalk/starter nw");
+   }
+   elsif($cmd eq "nwi")
+   {
+      system("~/.myTalk/starter nw true");
    }
 
 # clean up and be done
