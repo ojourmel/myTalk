@@ -19,9 +19,7 @@ vector<string> messageArray;
 
 int main( int argc, const char* argv[] )
 {
-
    string fileName = argv[1];
-   pthread_t threads[NUM_THREADS];
    
    thread listenerThread(listen, fileName);
    thread speakerThread(speak);
@@ -72,9 +70,10 @@ void getString(string fileName)
 
       while(!messageArray.empty())
       {
-         tmp = messageArray.back();
-         messageArray.pop_back();
+         tmp = messageArray.back(); //peek
+         messageArray.pop_back(); //pop
          printf("%s \n",tmp.c_str()); // print it
+         fflush(stdout); // flush buffers
          lastMessage = tmp;
       }
    }
@@ -102,7 +101,25 @@ void speak()
 
    while(getline(cin , message))
    {
-      message = "~/.myTalk/myt " + message;
-      system(message.c_str());
+      if(message != ""){
+
+         string escapeString=""; 
+         int count=0;
+
+         for(int i = 0; i<message.size(); i++){
+            switch(message[i]){
+               case '\\':
+                  escapeString.push_back('\\');
+                  escapeString.push_back('\\');
+               case '\"':
+                  escapeString.push_back('\\');
+                  escapeString.push_back('\"'); break;
+               default: escapeString.push_back(message[i]);
+            }
+         }
+        
+         message = "~/.myTalk/myt \"" + escapeString + "\"";
+         system(message.c_str());
+      }
    }
 }

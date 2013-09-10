@@ -1,8 +1,5 @@
 #!/usr/bin/perl
 
-
-#use Tie::File;
-
 $| = 1;
 
 $username = `whoami`;
@@ -13,10 +10,6 @@ $userLog = "/home/student/jourmeob/.myTalk/userLog.txt";
 $LOGFILE = "/home/student/" . $username . "/.myTalk/log.txt";
 
 $pid;
-
-
-
-
 
 if(@ARGV[0] eq "--kill")
 {
