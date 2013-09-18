@@ -1,16 +1,18 @@
 #!/usr/bin/perl
-
 $| = 1;
 
 $username = `whoami`;
 chomp $username;
 
 $masterLog = "/home/student/jourmeob/.myTalk/masterLog.txt";
+# User log file is not used as of now.
 $userLog = "/home/student/jourmeob/.myTalk/userLog.txt";
 $LOGFILE = "/home/student/" . $username . "/.myTalk/log.txt";
 
 $pid;
 
+# Command line argument switch.
+# Only look for -i if --start-nw was used
 if(@ARGV[0] eq "--kill")
 {
    killer();
@@ -73,7 +75,6 @@ if(@ARGV[0] eq "--help")
 }
 
 #### main ####
-
    $in = join(' ', @ARGV);
    $time=`date +"%H:%M:%S"`;
    chomp($time);
@@ -83,11 +84,12 @@ if(@ARGV[0] eq "--help")
    close $MYFILE;
    select(undef, undef, undef, 0.5);
    exit(0);
-
 #### end main ####
 
 #### functions ####
 
+# Quietly kills all tails (that the user has permission to kill,
+# and tailTalk, which cleans up after itself
 sub killer
 {
    # Overkill tail
@@ -95,21 +97,25 @@ sub killer
    system("killall tailTalk 2>> /dev/null");
 }
 
+# Starts the main client (tailTalk) in either it's own window,
+# interactive (current window) or no-window (background)
 sub start
 {
    $cmd = shift;
 
    my $childID = fork();
-     
    if($childID == 0) #Child
    {
-   
       sleep(2);
+      # Only notify the user that tail talk started if in
+      # no-window, non interactive mode...
+      # If they used a window, or interactive mode, they
+      # know that myTalk has started...
+      if($cmd eq "nw"){
+         print "\ntailTalk started\n\n";
+      }
       system("~/.myTalk/myt start: logging on");
-    print "\ntailTalk started\n\n";
-   
    }
-
    else
    {
 
@@ -125,12 +131,10 @@ sub start
       {
          system("~/.myTalk/starter nw true");
       }
-
    }
-# clean up and be done
-
 }
 
+# Prints whether or not tailTalk is running
 sub status
 {
 
@@ -143,6 +147,7 @@ sub status
    }
 }
 
+# Returns the pid(s) of all instances of *tailTalk*
 sub getTails
 {
    $pid = `ps aux | grep -e $username.*tailTalk`;
@@ -166,19 +171,20 @@ sub help
 
 sub version
 {
-   print "Version 0.2.5\n";
+   print "Version 0.2.6\n";
    print "Check ~/.myTalk/notes.txt for release notes\n";
 }
 
+# A nice list of all the users logged on. This is a bit broken...
 sub who
 {
    print "This functionality is currently under development\n";
    print "Check ~/.myTalk/notes.txt for more details\n";
 }
 
+# Reprints the last 3 lines in the logfile, in case the user missed it..
 sub printLast
 {
    $lastLine = `tail -n 3 $masterLog`;
    print $lastLine;
 }
-

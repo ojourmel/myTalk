@@ -4,12 +4,14 @@ NAME
          myt - cli chat
 
 SYNOPSIS
-         myt [OPTION] <message> [<"message">]
+         myt [OPTION] 
+         myt <message> [<"message">]
 
 EXAMPLE
-         $myt hello there<CR>
+         $ myt --start-nw -i
+         $ myt hello there<CR>
 
-
+         
 DESCRIPTION
          This help file documents myt a text based, system wide chat program
 
@@ -22,6 +24,12 @@ OPTIONS
         --start-nw
               starts the listening services for myTalk in the background
                of the current terminal, then exits
+        -i
+              starts the listening services for myTalk in interactive mode.
+               will consume the current terminal, and allow for messages
+               to be typed directly into the window.
+
+               only considered in conjunction with --start-nw
        
          --stat
               displays the current status of the listening services for
@@ -45,13 +53,12 @@ OPTIONS
               displays the current working version and then exits
 
 AUTHORS
-	Written by Oliver Jourmel, Lochlin Duperron, Zac Pez
+	Written by Oliver Jourmel, Lochlin Duperron, Zac Pez.
 
 MORE INFORMATION
         Can be found on the release notes. ~/.myTalk/notes.txt
+        Source Code can be found on GitHub at www.github.com/ojourmel/myTalk
 
 NOTE
 
-                         Version BETA 0.2.5
-
-
+                         Version BETA 0.2.6

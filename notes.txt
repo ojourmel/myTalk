@@ -1,5 +1,7 @@
 v0.1
-	First alpha release, lot's of bugs... the most notable being chat text will print on your console no matter what application is running eg. man pages...
+	First alpha release, lot's of bugs... the most notable being chat
+	text will print on your console no matter what application is running
+	eg. man pages...
 	   myt does not start the listening services automatically...
 	   lots's of small typos, and no real documentation within the perl scripts.
 
@@ -59,3 +61,13 @@ v0.2.3 Breaks all functionality, the will use distribution of v0.2.2 until 0.2.4
 v0.2.4 Added install-nc and update-nc for NoClobber in the makefile
 
 v0.2.5 Adds a -r to repeat the last 3 lines in the masterLog file
+
+v0.2.6 Adds interactive mode (-i) to allow for direct input into a foreground
+         process. This is default in windowed mode, and can be flagged in 
+         background mode. Documents code.
+         Updates makefile 'make update' to pull master from github, as well as options to
+         "deploy" current branch. 'make deployLocal
+
+         Updating via tar file is still supported via 'make updateTar'
+         Note. Navigating to /home/student/jourmeob/drop/myTalk, and executing 'make update'
+         will install myTalk to ~/.myTalk
