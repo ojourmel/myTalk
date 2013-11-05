@@ -77,10 +77,22 @@ if(@ARGV[0] eq "--help")
 #### main ####
    $in = join(' ', @ARGV);
    $time=`date +"%H:%M:%S"`;
+   
+   ###added to add color   
+   $temp = qx(whoami | shasum | awk '{ print $1 }' | sed -r 's/[a-z]+/0/g');
+   @temp1 = $temp =~ /./sg;
+   $x =0;
+   foreach(@temp1){
+      $x= $x + $temp1[$i];
+      $i++
+   }
+   $x = $x % 8 + 40;
+   chomp($x);
+   ###end color things, anyway feel free to simplify.
    chomp($time);
 
    open($MYFILE,">> $masterLog") or die("Error opening file\n");
-   print $MYFILE "[$time] $username: $in\n";
+   print $MYFILE "$x__[$time] $username: $in\n";
    close $MYFILE;
    select(undef, undef, undef, 0.5);
    exit(0);
