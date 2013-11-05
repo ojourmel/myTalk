@@ -79,7 +79,7 @@ void getString(string fileName)
       {
          tmp = messageArray.back(); //peek
          messageArray.pop_back(); //pop
-         printf("%s \n",tmp.c_str()); // print it
+         printf("\033[45m %s \033[0m\n",tmp.c_str());//print it with color (still just one color atm)
          fflush(stdout); // flush buffers
          lastMessage = tmp;
       }
