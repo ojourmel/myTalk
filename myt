@@ -79,7 +79,7 @@ if(@ARGV[0] eq "--help")
    $time=`date +"%H:%M:%S"`;
    
    ###added to add color   
-   $temp = qx(whoami | shasum | awk '{ print $1 }' | sed -r 's/[a-z]+/0/g');
+   $temp = qx(whoami | shasum | cut -d' ' -f1 | sed -r 's/[a-z]+/0/g');
    @temp1 = $temp =~ /./sg;
    $x =0;
    foreach(@temp1){
