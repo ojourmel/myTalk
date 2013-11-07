@@ -40,7 +40,7 @@ void getString(string fileName)
 {
    ifstream Test;
    Test.open(fileName.c_str(), std::ios_base::ate );//open file and set position to end of the file
-   string tmp;
+   string tmp,tmp2;
    int length = 0;
    int failsafe = 0;
    char c = '\0';
@@ -79,7 +79,8 @@ void getString(string fileName)
       {
          tmp = messageArray.back(); //peek
          messageArray.pop_back(); //pop
-         printf("\033[45m %s \033[0m\n",tmp.c_str());//print it with color (still just one color atm)
+         tmp2 = tmp.substr (0,2); //get the color
+         printf("\033[%sm %s \033[0m\n",tmp2.cstr(),tmp.c_str());//print it with color 
          fflush(stdout); // flush buffers
          lastMessage = tmp;
       }
